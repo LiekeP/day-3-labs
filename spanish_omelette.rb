@@ -71,3 +71,8 @@ steps = [
   { description: "When almost set, invert on a plate and slide back into the pan", action: "generic_recipe_step" },
   { description: "Cook a few more minutes and slide on to a plate and cool for 10 minutes before serving", action: "generic_recipe_step" }
 ]
+
+puts "Cooking instructions:"
+steps.each_with_index do |step, index|
+  puts (index + 1).to_s + ") " + step[:description]
+end
