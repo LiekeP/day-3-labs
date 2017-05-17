@@ -5,10 +5,15 @@ def print_divider
   puts "\n"
 end
 
-def print_progress_bar
+def print_go_bar
   print "G"
   10.times { sleep 0.1; print "O" }
   print "!!!"
+  puts "\n\n"
+end
+
+def print_progress_bar
+  5.times { sleep 0.1; print "." }
   puts "\n\n"
 end
 
@@ -46,7 +51,7 @@ loop do
     break
   elsif answer == "N"
     puts "You're not ready, go shopping!"
-    print_progress_bar
+    print_go_bar
   else
     puts "This is not a valid answer, try again. "
   end
@@ -76,3 +81,70 @@ puts "Cooking instructions:"
 steps.each_with_index do |step, index|
   puts (index + 1).to_s + ") " + step[:description]
 end
+
+#Define methods
+def generic_recipe_step
+  print "Working on it!"
+  print_progress_bar
+end
+
+def scrape_potatoes
+  counter = 0
+  while counter < NUM_POTATOES
+    counter += 1
+    print "Scraping potato #{counter}"
+    print_progress_bar
+  end
+end
+
+def cut_potatoes
+  counter = 0
+  while counter < NUM_POTATOES
+    counter += 1
+    print "Cutting potato #{counter} into thick slices"
+    print_progress_bar
+  end
+end
+
+def add_potatoes_to_pan
+  for counter in 1..NUM_POTATOES
+    print "Adding potato #{counter} to the pan."
+    print_progress_bar
+  end
+end
+
+def break_eggs
+  counter = 0
+  while counter < NUM_EGGS
+    counter += 1
+    print "Breaking egg #{counter}"
+    print_progress_bar
+  end
+end
+
+def ready_next_step(step, index)
+  puts "Are you ready for step #{index + 1}?\n(#{step[:description]})"
+  answer = gets.chomp.upcase
+
+  answer == "Y"
+end
+
+#Go through recipe
+steps.each_with_index do |step, index|
+  print_divider
+
+  loop do
+    ready = ready_next_step(step, index)
+    break if ready
+
+    puts "OK, I will give you some extra time."
+    print_progress_bar
+  end
+
+  send(step[:action])
+end
+
+#end message
+print_divider
+puts "Hurray you just finished! Enjoy your omelette :)"
+print_divider
